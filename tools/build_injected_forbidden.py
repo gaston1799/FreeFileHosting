@@ -312,6 +312,23 @@ def build_entry(
 -- before loading entry.lua.
 
 local GLOBAL_ENV = (getgenv and getgenv()) or _G
+local ROOT_ENV = _G or GLOBAL_ENV or {{}}
+
+local game = game or ROOT_ENV.game
+local debug = debug or ROOT_ENV.debug
+local string = string or ROOT_ENV.string
+local table = table or ROOT_ENV.table
+local type = type or ROOT_ENV.type
+local typeof = typeof or ROOT_ENV.typeof
+local ipairs = ipairs or ROOT_ENV.ipairs
+local pairs = pairs or ROOT_ENV.pairs
+local pcall = pcall or ROOT_ENV.pcall
+local require = require or ROOT_ENV.require
+local loadstring = loadstring or ROOT_ENV.loadstring
+local setmetatable = setmetatable or ROOT_ENV.setmetatable
+local getmetatable = getmetatable or ROOT_ENV.getmetatable
+local error = error or ROOT_ENV.error
+local tostring = tostring or ROOT_ENV.tostring
 
 local function readInjectedBase()
     local candidates = {{
@@ -499,6 +516,7 @@ end
 local runtime = {{}}
 local moduleCache = {{}}
 local loading = {{}}
+runtime.globals = ROOT_ENV
 
 function runtime:getNode(id)
     local node = nodes[id]
@@ -545,7 +563,45 @@ end
 
     local url = BASE_URL .. "/" .. encodeUrlPath(relPath)
     local source = game:HttpGet(url)
-    local prelude = "local script, require, runtime = ...\\nlocal __FORBIDDEN_ROOT = runtime:getNode('Forbidden')\\n"
+    local prelude = [[
+local script, require, runtime = ...
+local remoteRequire = runtime.remoteRequire
+local __FORBIDDEN_ROOT = runtime:getNode('Forbidden')
+local _G = runtime.globals
+local game = game or _G.game
+local workspace = workspace or _G.workspace
+local Enum = Enum or _G.Enum
+local task = task or _G.task
+local os = os or _G.os
+local math = math or _G.math
+local string = string or _G.string
+local table = table or _G.table
+local type = type or _G.type
+local typeof = typeof or _G.typeof
+local ipairs = ipairs or _G.ipairs
+local pairs = pairs or _G.pairs
+local next = next or _G.next
+local tonumber = tonumber or _G.tonumber
+local tostring = tostring or _G.tostring
+local pcall = pcall or _G.pcall
+local xpcall = xpcall or _G.xpcall
+local assert = assert or _G.assert
+local error = error or _G.error
+local warn = warn or _G.warn
+local setmetatable = setmetatable or _G.setmetatable
+local getmetatable = getmetatable or _G.getmetatable
+local rawget = rawget or _G.rawget
+local rawset = rawset or _G.rawset
+local select = select or _G.select
+local unpack = unpack or (_G.table and _G.table.unpack) or _G.unpack
+local Vector2 = Vector2 or _G.Vector2
+local Vector3 = Vector3 or _G.Vector3
+local CFrame = CFrame or _G.CFrame
+local Color3 = Color3 or _G.Color3
+local UDim2 = UDim2 or _G.UDim2
+local RaycastParams = RaycastParams or _G.RaycastParams
+local PathWaypoint = PathWaypoint or _G.PathWaypoint
+]]
     local chunk, loadErr = loadstring(prelude .. source)
     if not chunk then
         loading[moduleId] = nil
