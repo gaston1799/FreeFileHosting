@@ -320,7 +320,12 @@ local function readInjectedBase()
     }}
 
     if shared ~= nil then
-        table.insert(candidates, shared.__FORBIDDEN_BASE_URL)
+        local ok, sharedBase = pcall(function()
+            return shared.__FORBIDDEN_BASE_URL
+        end)
+        if ok then
+            candidates[#candidates + 1] = sharedBase
+        end
     end
 
     for _, candidate in ipairs(candidates) do
