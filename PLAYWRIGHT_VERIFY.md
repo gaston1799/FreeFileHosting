@@ -3,9 +3,9 @@
 Use this after the repo is pushed to GitHub.
 
 Set:
-- `GITHUB_TREE_URL` to the repo tree for `inject/`
-- `RAW_ENTRY_URL` to the raw `inject/entry.lua` URL
-- `RAW_MODULE_URL` to one raw module URL, for example `inject/modules/Forbidden/AI/__module.lua`
+- `GITHUB_TREE_URL` to `https://github.com/gaston1799/FreeFileHosting/tree/forbidden-v2-inject/inject`
+- `RAW_ENTRY_URL` to `https://raw.githubusercontent.com/gaston1799/FreeFileHosting/forbidden-v2-inject/inject/entry.lua`
+- `RAW_MODULE_URL` to `https://raw.githubusercontent.com/gaston1799/FreeFileHosting/forbidden-v2-inject/inject/modules/Forbidden/AI/__module.lua`
 
 PowerShell example:
 

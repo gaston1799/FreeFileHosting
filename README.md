@@ -25,14 +25,14 @@ py -3 E:\ForbiddenV2\tools\build_injected_forbidden.py
 ## One-loadstring usage after the repo is pushed
 
 ```lua
-local url = "https://raw.githubusercontent.com/<owner>/<repo>/<branch>/inject/entry.lua"
+local url = "https://raw.githubusercontent.com/gaston1799/FreeFileHosting/forbidden-v2-inject/inject/entry.lua"
 local AI = loadstring(game:HttpGet(url), url)()
 ```
 
 If your executor does not preserve the chunk source for `debug.info`, set the base URL first:
 
 ```lua
-getgenv().__FORBIDDEN_BASE_URL = "https://raw.githubusercontent.com/<owner>/<repo>/<branch>/inject"
+getgenv().__FORBIDDEN_BASE_URL = "https://raw.githubusercontent.com/gaston1799/FreeFileHosting/forbidden-v2-inject/inject"
 local AI = loadstring(game:HttpGet(getgenv().__FORBIDDEN_BASE_URL .. "/entry.lua"))()
 ```
 
