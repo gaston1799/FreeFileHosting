@@ -319,15 +319,6 @@ local function readInjectedBase()
         _G and _G.__FORBIDDEN_BASE_URL,
     }}
 
-    if shared ~= nil then
-        local ok, sharedBase = pcall(function()
-            return shared.__FORBIDDEN_BASE_URL
-        end)
-        if ok then
-            candidates[#candidates + 1] = sharedBase
-        end
-    end
-
     for _, candidate in ipairs(candidates) do
         if type(candidate) == "string" and candidate ~= "" then
             return (candidate:gsub("/+$", ""))
