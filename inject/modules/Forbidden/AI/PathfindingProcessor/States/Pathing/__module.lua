@@ -12,7 +12,7 @@ local rs = game:GetService("ReplicatedStorage")
 
 
 -- == Packages == --
-local RBLXStateMachineLib = require(__FORBIDDEN_ROOT.Packages.robloxstatemachine)
+local RBLXStateMachineLib = remoteRequire("Forbidden/Packages/robloxstatemachine")
 
 
 -- == References == --

@@ -16,7 +16,7 @@ local ForbiddenDir = script.Parent.Parent.Parent.Parent
 
 
 -- == Packages == --
-local RBLXStateMachineLib = require(__FORBIDDEN_ROOT.Packages.robloxstatemachine)
+local RBLXStateMachineLib = remoteRequire("Forbidden/Packages/robloxstatemachine")
 
 
 -- == Forbidden Types == --

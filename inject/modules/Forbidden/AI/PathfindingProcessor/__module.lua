@@ -15,7 +15,7 @@ local debris                = game:GetService("Debris")
 
 
 -- == Libraries == --
-local RBLXStateMachineLib = require(__FORBIDDEN_ROOT.Packages.robloxstatemachine)
+local RBLXStateMachineLib = remoteRequire("Forbidden/Packages/robloxstatemachine")
 
 
 -- == Forbidden Modules & Architecture == --

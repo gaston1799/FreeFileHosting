@@ -20,7 +20,8 @@ INJECT_ROOT_NAME = "Forbidden"
 MANIFEST_RE = re.compile(r"^\[(\d+)\]\s+([^|]+?)\s+\|\s+(.+?)\s+\|\s+(.+)$")
 SOURCE_NAME_RE = re.compile(r"^\d+_(.+)\.(module|client|server)\.lua$")
 TARGETED_SOURCE_REWRITES = {
-    "require(rs.Forbidden.Packages.robloxstatemachine)": "require(__FORBIDDEN_ROOT.Packages.robloxstatemachine)",
+    'require(rs.Forbidden.Packages.robloxstatemachine)': 'remoteRequire("Forbidden/Packages/robloxstatemachine")',
+    'require(__FORBIDDEN_ROOT.Packages.robloxstatemachine)': 'remoteRequire("Forbidden/Packages/robloxstatemachine")',
 }
 BLOCK_COMMENT_START_RE = re.compile(r"^\s*--\[(=*)\[")
 LOCAL_ASSIGN_RE = re.compile(r"^\s*local\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+?)\s*$")
