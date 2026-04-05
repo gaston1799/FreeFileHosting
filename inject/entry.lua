@@ -9,14 +9,36 @@
 
 local GLOBAL_ENV = (getgenv and getgenv()) or _G
 
-local function inferBaseUrl()
-    local injectedBase = GLOBAL_ENV.__FORBIDDEN_BASE_URL
-    if type(injectedBase) == "string" and injectedBase ~= "" then
-        return (injectedBase:gsub("/+$", ""))
+local function readInjectedBase()
+    local candidates = {
+        GLOBAL_ENV and GLOBAL_ENV.__FORBIDDEN_BASE_URL,
+        _G and _G.__FORBIDDEN_BASE_URL,
+    }
+
+    if shared ~= nil then
+        table.insert(candidates, shared.__FORBIDDEN_BASE_URL)
     end
 
-    if debug and debug.info then
-        local ok, source = pcall(debug.info, 1, "s")
+    for _, candidate in ipairs(candidates) do
+        if type(candidate) == "string" and candidate ~= "" then
+            return (candidate:gsub("/+$", ""))
+        end
+    end
+
+    return nil
+end
+
+local function inferBaseUrl()
+    local injectedBase = readInjectedBase()
+    if injectedBase then
+        return injectedBase
+    end
+
+    local debugTable = debug
+    if type(debugTable) == "table" and type(debugTable.info) == "function" then
+        local ok, source = pcall(function()
+            return debugTable.info(1, "s")
+        end)
         if ok and type(source) == "string" then
             source = source:gsub("^@", "")
             if source:match("^https?://") then
